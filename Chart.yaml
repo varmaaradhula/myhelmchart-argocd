@@ -1,0 +1,6 @@
+apiVersion: v2
+name: wave-barista
+description: A Helm chart for Wave Cafe and Barista applications
+type: application
+version: 0.1.0
+appVersion: "1.0"

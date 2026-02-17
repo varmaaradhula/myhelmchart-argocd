@@ -1,0 +1,34 @@
+wavecafe:
+  name: wavecafe
+  image: varmaaradhula/wave:v1
+  port: 80
+  secretKey: WAVE_CAFE_USER
+  secretValue: Ayansh
+
+barista:
+  name: barista
+  image: varmaaradhula/barista:v1
+  port: 80
+  secretKey: BARISTA_USER
+  secretValue: Preesha
+
+secret:
+  name: wave-barista-secret
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: true
+  name: wave-barista-ingress
+  className: alb
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+  host: va.onederby.co.uk
+  paths:
+    - path: /
+      service: wavecafe-service
+    - path: /barista
+      service: barista-service

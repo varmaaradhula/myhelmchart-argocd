@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.wavecafe.name }}
+  labels:
+    app: {{ .Values.wavecafe.name }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.wavecafe.name }}
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.wavecafe.name }}
+    spec:
+      containers:
+      - image: {{ .Values.wavecafe.image }}
+        name: {{ .Values.wavecafe.name }}
+        env:
+        - name: {{ .Values.wavecafe.secretKey }}
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.secret.name }}
+              key: {{ .Values.wavecafe.secretKey }}
+        ports:
+        - containerPort: {{ .Values.wavecafe.port }}
+          name: {{ .Values.wavecafe.name }}

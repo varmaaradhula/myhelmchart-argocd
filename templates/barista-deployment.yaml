@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.barista.name }}
+  labels:
+    app: {{ .Values.barista.name }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.barista.name }}
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.barista.name }}
+    spec:
+      containers:
+      - image: {{ .Values.barista.image }}
+        name: {{ .Values.barista.name }}
+        env:
+        - name: {{ .Values.barista.secretKey }}
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.secret.name }}
+              key: {{ .Values.barista.secretKey }}
+        ports:
+        - containerPort: {{ .Values.barista.port }}
+          name: {{ .Values.barista.name }}

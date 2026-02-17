@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.wavecafe.name }}-service
+spec:
+  type: {{ .Values.service.type }}
+  selector:
+    app: {{ .Values.wavecafe.name }}
+  ports:
+    - name: {{ .Values.wavecafe.name }}-service-port
+      protocol: TCP
+      port: {{ .Values.service.port }}
+      targetPort: {{ .Values.wavecafe.port }}
