@@ -7,7 +7,7 @@ wavecafe:
 
 barista:
   name: barista
-  image: varmaaradhula/barista:v1
+  image: varmaaradhula/barista:v2
   port: 80
   secretKey: BARISTA_USER
   secretValue: Preesha
