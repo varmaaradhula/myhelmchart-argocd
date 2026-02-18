@@ -28,7 +28,9 @@ ingress:
     alb.ingress.kubernetes.io/target-type: ip
   host: va.onederby.co.uk
   paths:
-    - path: /
-      service: wavecafe-service
     - path: /barista
       service: barista-service
+      port: 80
+    - path: /
+      service: wavecafe-service
+      port: 80
