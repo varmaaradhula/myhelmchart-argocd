@@ -2,24 +2,25 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ .Values.ingress.name }}
+  name: {{ .Values.ingress.name | quote }}
   annotations:
-    kubernetes.io/ingress.class: {{ .Values.ingress.className }}
-    {{- range $key, $value := .Values.ingress.annotations }}
-    {{ $key }}: {{ $value }}
-    {{- end }}
+    kubernetes.io/ingress.class: {{ .Values.ingress.className | quote }}
+{{- range $key, $value := .Values.ingress.annotations }}
+    {{ $key }}: {{ $value | quote }}
+{{- end }}
 spec:
   rules:
-  - host: {{ .Values.ingress.host }}
-    http:
-      paths:
-      {{- range .Values.ingress.paths }}
-      - path: {{ .path }}
-        pathType: Prefix
-        backend:
-          service:
-            name: {{ .service }}
-            port:
-              number: 80
-      {{- end }}
+    - host: {{ .Values.ingress.host | quote }}
+      http:
+        paths:
+{{- range .Values.ingress.paths }}
+          - path: {{ .path | quote }}
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .service | quote }}
+                port:
+                  number: {{ default 80 .port }}
 {{- end }}
+{{- end }}
+
